@@ -46,7 +46,7 @@ class CurrenciesPrice extends FormElement {
   /**
    * {@inheritdoc}
    */
-  public static function processCommerceCurrenciesPrice(array &$element, FormStateInterface $form_state, array &$complete_form) {
+  public static function processCurrenciesPrice(array &$element, FormStateInterface $form_state, array &$complete_form) {
 
     // Process defaults.
     $defaultValue = $element['#default_value'];
@@ -63,8 +63,8 @@ class CurrenciesPrice extends FormElement {
         '#type' => 'commerce_price',
         '#title' => t('@currency price', ['@currency' => $key]),
         '#title_display' => 'before',
-        '#default_value' =>  ['number' => $defaultValue['prices'][$key]['number'] ?? '0.00', 'currency_code' => $key],
-        '#required' => TRUE,
+        '#default_value' =>  ['number' => $defaultValue['prices'][$key]['number'] ?? '', 'currency_code' => $key],
+        '#required' => $element['#required_prices'],
         '#size' => 10,
         '#available_currencies' => [$key],
       ];
@@ -76,7 +76,7 @@ class CurrenciesPrice extends FormElement {
   /**
    * {@inheritdoc}
    */
-  public static function validateCommerceCurrenciesPrice(array &$element, FormStateInterface $form_state, array &$complete_form) {
+  public static function validateCurrenciesPrice(array &$element, FormStateInterface $form_state, array &$complete_form) {
     $value = $form_state->getValue($element['#parents']);
     if (!empty($value['prices'])) {
       $form_state->setValueForElement($element, $value['prices']);

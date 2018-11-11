@@ -7,7 +7,7 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Plugin implementation of the 'address_country_default' widget.
+ * Plugin implementation of the 'commerce_currencies_price_default' widget.
  *
  * @FieldWidget(
  *   id = "commerce_currencies_price_default",
@@ -18,6 +18,43 @@ use Drupal\Core\Form\FormStateInterface;
  * )
  */
 class CurrenciesPriceDefaultWidget extends WidgetBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'required_prices' => FALSE,
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+
+    $elements = [];
+    $elements['required_prices'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Required prices'),
+      '#description' => $this->t('Select if you want that is required to enter price for all currencies'),
+      '#default_value' => $this->getSetting('required_prices'),
+      '#required' => FALSE,
+    ];
+
+    return $elements;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = [];
+    $summary[] = t('Required all currency prices : @required_prices', ['@required_prices' => $this->getSetting('required_prices') ? t('Yes') : t('No')]);
+
+    return $summary;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -30,6 +67,7 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
     $element['prices'] = [
       '#type' => 'commerce_currencies_price',
       '#default_value' => $default,
+      '#required_prices' => $this->getSetting('required_prices'),
     ];
 
     return $element;
