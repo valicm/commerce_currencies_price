@@ -33,6 +33,7 @@ class CurrenciesPrice extends FormElement {
     return [
       '#multiple' => TRUE,
       '#input' => TRUE,
+      '#tree' => TRUE,
       '#default_value' => [],
       '#process' => [
         [$class, 'processCurrenciesPrice'],
@@ -57,6 +58,8 @@ class CurrenciesPrice extends FormElement {
 
     $element['prices'] = [
       '#tree' => TRUE,
+      '#type' => 'details',
+      '#title' => t('Price per currency'),
     ];
 
     foreach ($enabled_currencies as $key => $currency) {

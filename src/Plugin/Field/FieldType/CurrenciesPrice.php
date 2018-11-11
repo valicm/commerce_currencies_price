@@ -13,10 +13,10 @@ use Drupal\Core\Field\FieldStorageDefinitionInterface;
  * @FieldType(
  *   id = "commerce_currencies_price",
  *   label = @Translation("Price currencies"),
- *   description = @Translation("Field containing price field for each of
- *   enabled currencies"), category = @Translation("Commerce"), default_widget
- *   = "commerce_currencies_price_default", default_formatter =
- *   "commerce_currencies_price_formatter"
+ *   description = @Translation("Field containing price field for each of enabled currencies"),
+ *   category = @Translation("Commerce"),
+ *   default_widget = "commerce_currencies_price_default",
+ *   default_formatter = "commerce_currencies_price_formatter"
  * )
  */
 class CurrenciesPrice extends FieldItemBase {
