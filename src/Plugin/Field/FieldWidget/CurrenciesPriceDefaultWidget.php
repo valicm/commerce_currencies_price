@@ -22,6 +22,7 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
    * {@inheritdoc}
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
+    /** @var \Drupal\commerce_currencies_price\Plugin\Field\FieldType\CurrenciesPrice $item */
     $item = $items[$delta];
 
     $default = $item->getEntity()->isNew() ? [] : $item->toArray();
