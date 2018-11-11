@@ -9,6 +9,7 @@ use Drupal\Core\Render\Element\FormElement;
  * Provides a price per currency form element.
  *
  * Usage example:
+ *
  * @code
  * $form['price'] = [
  *   '#type' => 'commerce_currencies_price',
@@ -63,7 +64,10 @@ class CurrenciesPrice extends FormElement {
         '#type' => 'commerce_price',
         '#title' => t('@currency price', ['@currency' => $key]),
         '#title_display' => 'before',
-        '#default_value' =>  ['number' => $defaultValue['prices'][$key]['number'] ?? '', 'currency_code' => $key],
+        '#default_value' => [
+          'number' => $defaultValue['prices'][$key]['number'] ?? '',
+          'currency_code' => $key,
+        ],
         '#required' => $element['#required_prices'],
         '#size' => 10,
         '#available_currencies' => [$key],
