@@ -50,7 +50,7 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $summary[] = $this->t('Required all currency prices : @required_prices', ['@required_prices' => $this->getSetting('required_prices') ? t('Yes') : t('No')]);
+    $summary[] = $this->t('Required all currency prices : @required_prices', ['@required_prices' => $this->getSetting('required_prices') ? $this->t('Yes') : $this->t('No')]);
 
     return $summary;
   }
