@@ -2,10 +2,10 @@
 
 namespace Drupal\commerce_currencies_price\Plugin\Field\FieldType;
 
-use Drupal\commerce_price\Price;
 use Drupal\Core\Field\FieldItemBase;
-use Drupal\Core\TypedData\MapDataDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\TypedData\MapDataDefinition;
+use Drupal\commerce_price\Price;
 
 /**
  * Plugin implementation of the 'commerce_currencies_price' field type.
@@ -124,6 +124,11 @@ class CurrenciesPrice extends FieldItemBase {
 
     return $isEmpty;
   }
+
+  /**
+   * List of stored prices.
+   */
+  protected array $prices;
 
   /**
    * Gets the Price value object for the current field item.

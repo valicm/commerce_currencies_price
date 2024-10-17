@@ -2,8 +2,8 @@
 
 namespace Drupal\commerce_currencies_price\Plugin\Field\FieldFormatter;
 
-use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
 
 /**
  * Plugin implementation of the 'commerce_currencies_price_formatter' formatter.

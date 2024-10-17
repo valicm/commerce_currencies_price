@@ -3,7 +3,7 @@
 namespace Drupal\commerce_currencies_price\Element;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Render\Element\FormElement;
+use Drupal\Core\Render\Element\FormElementBase;
 
 /**
  * Provides a price per currency form element.
@@ -23,7 +23,7 @@ use Drupal\Core\Render\Element\FormElement;
  *
  * @FormElement("commerce_currencies_price")
  */
-class CurrenciesPrice extends FormElement {
+class CurrenciesPrice extends FormElementBase {
 
   /**
    * {@inheritdoc}
