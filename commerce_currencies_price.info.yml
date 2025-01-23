@@ -1,7 +1,7 @@
 name: 'Commerce Currencies Price'
 type: module
-description: 'Commerce 2 price field for all enabled currencies.'
-core_version_requirement: ^10 || ^11
+description: 'Commerce Core price field for all enabled currencies.'
+core_version_requirement: ^10.3 || ^11
 package: Commerce
 
 dependencies:

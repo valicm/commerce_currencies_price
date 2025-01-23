@@ -11,8 +11,8 @@ INTRODUCTION
 ------------
 
 Field type based on commerce price field and currency entity.
-It allows to enter prices for all currencies inside one field, 
-instead of creating per currency field. Data are serialized 
+It allows to enter prices for all currencies inside one field,
+instead of creating per currency field. Data are serialized
 with this field.
 
 You have available method $entity->field_name->toPrices() to get list of
@@ -24,8 +24,8 @@ querying by currency prices or resolving them.
 
 REQUIREMENTS
 ------------
- 
- * Contributed module Commerce 2 - `composer require drupal/commerce`
+
+ * Contributed module Commerce Core - `composer require drupal/commerce`
 
 
 INSTALLATION

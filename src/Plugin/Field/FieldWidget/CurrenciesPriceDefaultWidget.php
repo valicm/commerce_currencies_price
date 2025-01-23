@@ -2,21 +2,20 @@
 
 namespace Drupal\commerce_currencies_price\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
  * Plugin implementation of the 'commerce_currencies_price_default' widget.
- *
- * @FieldWidget(
- *   id = "commerce_currencies_price_default",
- *   label = @Translation("Commerce currencies price"),
- *   field_types = {
- *     "commerce_currencies_price"
- *   },
- * )
  */
+#[FieldWidget(
+  id: "commerce_currencies_price_default",
+  label: new TranslatableMarkup("Commerce currencies price"),
+  field_types: ["commerce_currencies_price"],
+)]
 class CurrenciesPriceDefaultWidget extends WidgetBase {
 
   /**

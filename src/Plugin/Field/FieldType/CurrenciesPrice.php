@@ -2,23 +2,24 @@
 
 namespace Drupal\commerce_currencies_price\Plugin\Field\FieldType;
 
+use Drupal\Core\Field\Attribute\FieldType;
 use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\Core\TypedData\MapDataDefinition;
 use Drupal\commerce_price\Price;
 
 /**
  * Plugin implementation of the 'commerce_currencies_price' field type.
- *
- * @FieldType(
- *   id = "commerce_currencies_price",
- *   label = @Translation("Price currencies"),
- *   description = @Translation("Field containing price field for each of enabled currencies"),
- *   category = @Translation("Commerce"),
- *   default_widget = "commerce_currencies_price_default",
- *   default_formatter = "commerce_currencies_price_formatter"
- * )
  */
+#[FieldType(
+  id: "commerce_currencies_price",
+  label: new TranslatableMarkup("Price currencies"),
+  description: new TranslatableMarkup("Field containing price field for each of enabled currencies."),
+  category: "commerce",
+  default_widget: "commerce_currencies_price_default",
+  default_formatter: "commerce_currencies_price_formatter",
+)]
 class CurrenciesPrice extends FieldItemBase {
 
   /**
