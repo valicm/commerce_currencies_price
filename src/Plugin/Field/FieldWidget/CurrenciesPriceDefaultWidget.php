@@ -2,11 +2,13 @@
 
 namespace Drupal\commerce_currencies_price\Plugin\Field\FieldWidget;
 
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Field\Attribute\FieldWidget;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Plugin implementation of the 'commerce_currencies_price_default' widget.
@@ -18,12 +20,24 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
 )]
 class CurrenciesPriceDefaultWidget extends WidgetBase {
 
+  protected EntityTypeManagerInterface $entityTypeManager;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container, array $configuration, $plugin_id, $plugin_definition) {
+    $instance = parent::create($container, $configuration, $plugin_id, $plugin_definition);
+    $instance->entityTypeManager = $container->get('entity_type.manager');
+    return $instance;
+  }
+
   /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
     return [
       'required_prices' => FALSE,
+      'available_currencies' => [],
     ];
   }
 
@@ -41,6 +55,15 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
       '#required' => FALSE,
     ];
 
+    $elements['available_currencies'] = [
+      '#type' => 'checkboxes',
+      '#title' => $this->t('Available prices'),
+      '#description' => $this->t('If none select all enabled currencies will be available'),
+      '#options' => $this->getEnabledCurrencies(),
+      '#default_value' => $this->getSetting('available_currencies'),
+      '#required' => FALSE,
+    ];
+
     return $elements;
   }
 
@@ -49,7 +72,8 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
    */
   public function settingsSummary() {
     $summary = [];
-    $summary[] = $this->t('Required all currency prices : @required_prices', ['@required_prices' => $this->getSetting('required_prices') ? $this->t('Yes') : $this->t('No')]);
+    $summary[] = $this->t('Require to enter all prices : @required_prices', ['@required_prices' => $this->getSetting('required_prices') ? $this->t('Yes') : $this->t('No')]);
+    $summary[] = $this->t('Enabled currencies : @available_currencies', ['@available_currencies' => implode(',', array_keys($this->getAvailableCurrencies()))]);
 
     return $summary;
   }
@@ -67,6 +91,7 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
       '#type' => 'commerce_currencies_price',
       '#default_value' => $default,
       '#required_prices' => $this->getSetting('required_prices'),
+      '#available_currencies' => $this->getAvailableCurrencies(),
     ];
 
     return $element;
@@ -81,6 +106,32 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
       $new_values[$delta]['prices'] = $value['prices'];
     }
     return $new_values;
+  }
+
+  /**
+   * Get list of enabled currencies.
+   */
+  protected function getEnabledCurrencies(): array {
+    $currencies = $this->entityTypeManager->getStorage('commerce_currency')->loadByProperties(['status' => TRUE]);
+    $options = [];
+    foreach ($currencies as $currency) {
+      $options[$currency->id()] = $currency->id();
+    }
+
+    return $options;
+  }
+
+  /**
+   * Get chosen currencies.
+   */
+  protected function getAvailableCurrencies(): array {
+    $available = $this->getSetting('available_currencies');
+    foreach ($available as $key => $currency) {
+      if (empty($currency)) {
+        unset($available[$key]);
+      }
+    }
+    return !empty($available) ? $available : $this->getSetting('available_currencies');
   }
 
 }

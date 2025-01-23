@@ -3,6 +3,7 @@
 namespace Drupal\commerce_currencies_price\Element;
 
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Render\Attribute\FormElement;
 use Drupal\Core\Render\Element\FormElementBase;
 
 /**
@@ -20,9 +21,10 @@ use Drupal\Core\Render\Element\FormElementBase;
  *   ],
  * ];
  * @endcode
- *
- * @FormElement("commerce_currencies_price")
  */
+#[FormElement(
+  id: "commerce_currencies_price",
+)]
 class CurrenciesPrice extends FormElementBase {
 
   /**
@@ -49,12 +51,11 @@ class CurrenciesPrice extends FormElementBase {
    * {@inheritdoc}
    */
   public static function processCurrenciesPrice(array &$element, FormStateInterface $form_state, array &$complete_form) {
-
     // Process defaults.
     $defaultValue = $element['#default_value'];
 
     // Get enabled currencies.
-    $enabled_currencies = self::enabledCurrencies();
+    $enabled_currencies = $element['#available_currencies'];
 
     $element['prices'] = [
       '#tree' => TRUE,
@@ -88,29 +89,6 @@ class CurrenciesPrice extends FormElementBase {
     if (!empty($value['prices'])) {
       $form_state->setValueForElement($element, $value['prices']);
     }
-  }
-
-  /**
-   * Get enabled currencies.
-   *
-   * @return \Drupal\Core\Entity\EntityInterface[]
-   *   List of all enabled currencies.
-   *
-   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
-   * @throws \Drupal\Component\Plugin\Exception\PluginNotFoundException
-   */
-  public static function enabledCurrencies() {
-    static $enabled;
-
-    if (!isset($enabled)) {
-      $enabled = \Drupal::EntityTypeManager()
-        ->getStorage('commerce_currency')
-        ->loadByProperties([
-          'status' => TRUE,
-        ]);
-
-    }
-    return $enabled;
   }
 
 }
