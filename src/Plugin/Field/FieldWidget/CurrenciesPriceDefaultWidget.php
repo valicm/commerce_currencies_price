@@ -20,6 +20,9 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 )]
 class CurrenciesPriceDefaultWidget extends WidgetBase {
 
+  /**
+   * The entity type manager.
+   */
   protected EntityTypeManagerInterface $entityTypeManager;
 
   /**
