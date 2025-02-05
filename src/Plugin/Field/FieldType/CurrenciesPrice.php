@@ -126,7 +126,6 @@ class CurrenciesPrice extends FieldItemBase {
     return $isEmpty;
   }
 
-
   /**
    * Gets the Price value object for the current field item.
    *
