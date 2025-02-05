@@ -126,10 +126,6 @@ class CurrenciesPrice extends FieldItemBase {
     return $isEmpty;
   }
 
-  /**
-   * List of stored prices.
-   */
-  protected array $prices;
 
   /**
    * Gets the Price value object for the current field item.
@@ -139,7 +135,7 @@ class CurrenciesPrice extends FieldItemBase {
    */
   public function toPrices() {
     $prices = [];
-    $data = $this->prices;
+    $data = $this->toArray();
 
     foreach ($data as $key => $item) {
       // Skip empty fields.
