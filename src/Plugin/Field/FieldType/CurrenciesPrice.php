@@ -135,8 +135,9 @@ class CurrenciesPrice extends FieldItemBase {
   public function toPrices() {
     $prices = [];
     $data = $this->toArray();
+    $stored_prices = $data['prices'] ?? [];
 
-    foreach ($data as $key => $item) {
+    foreach ($stored_prices as $key => $item) {
       // Skip empty fields.
       if (isset($item['number']) && $item['number'] !== '') {
         $prices[$key] = new Price((string) $item['number'], $item['currency_code']);
