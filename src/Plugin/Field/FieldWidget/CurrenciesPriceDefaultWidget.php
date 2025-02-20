@@ -134,7 +134,7 @@ class CurrenciesPriceDefaultWidget extends WidgetBase {
         unset($available[$key]);
       }
     }
-    return !empty($available) ? $available : $this->getSetting('available_currencies');
+    return !empty($available) ? $available : $this->getEnabledCurrencies();
   }
 
 }
